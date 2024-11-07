@@ -10,7 +10,7 @@ function StudentListPage() {
 
   useEffect(() => {
     const getStudents = async () => {
-      const response = await fetch('http://localhost:3000/students');
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/students`);
       const data = await response.json();
       setStudents(data);
     };
@@ -31,7 +31,7 @@ function StudentListPage() {
       <button
         onClick={async () => {
           // use setter function when you want to use the previous state
-          await fetch('http://localhost:3000/students', {
+          await fetch(`${import.meta.env.VITE_API_URL}/students`, {
             body: JSON.stringify({
               sId: '12345466756w',
               firstName: 'AJ',

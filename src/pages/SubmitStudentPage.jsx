@@ -25,7 +25,7 @@ export const SubmitStudentPage = () => {
       <input type="text" placeholder="School" onChange={(event) => setSchool(event.target.value)} />
       <button
         onClick={async () => {
-          await fetch('http://localhost:3000/students', {
+          await fetch(`${import.meta.env.VITE_API_URL}/students`, {
             body: JSON.stringify({
               firstName: firstName,
               lastName: lastName,

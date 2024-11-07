@@ -7,7 +7,7 @@ export const StudentDetailPage = () => {
 
   useEffect(() => {
     const getStudent = async () => {
-      const response = await fetch(`http://localhost:3000/students/${id}`);
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/students/${id}`);
       const data = await response.json();
       setStudent(data);
     };
