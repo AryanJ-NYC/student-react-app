@@ -3,10 +3,12 @@ import { StudentInfo } from './StudentInfo'; // named import
 // import StudentInfo from './StudentInfo'; // default import
 import { Link } from 'react-router-dom';
 import './App.css';
+import { useAuth } from '@clerk/clerk-react';
 
 function StudentListPage() {
   // the point of state is that it is dynamic and can be changed
   const [students, setStudents] = useState([]); // initialize state as studentList
+  const { isSignedIn, signOut } = useAuth();
 
   useEffect(() => {
     const getStudents = async () => {
@@ -48,14 +50,19 @@ function StudentListPage() {
       >
         Add a new student
       </button>
-
-      <button
-        onClick={() => {
-          setStudents(students.slice(0, students.length - 1));
-        }}
-      >
-        Remove last student
-      </button>
+      {!isSignedIn && <Link to="/register">Register</Link>}
+      {!isSignedIn && <Link to="/login">Login</Link>}
+      {isSignedIn && (
+        <button
+          onClick={async () => {
+            await fetch(`${import.meta.env.VITE_API_URL}/logout`);
+            signOut();
+          }}
+          type="button"
+        >
+          Logout
+        </button>
+      )}
     </div>
   );
 }
