@@ -15,20 +15,12 @@ export function RegisterPage() {
     try {
       const response = await fetch(`${import.meta.env.VITE_API_URL}/register`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ emailAddress, password }),
       });
 
       if (response.ok) {
-        const session = await response.json();
-        const { token } = session;
-        const signInResponse = await signIn.create({
-          identifier: emailAddress,
-          password,
-          token,
-        });
+        const signInResponse = await signIn.create({ identifier: emailAddress, password });
         await setActive({ session: signInResponse.createdSessionId });
 
         // Registration successful, redirect to login or home

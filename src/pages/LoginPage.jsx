@@ -13,31 +13,11 @@ export function LoginPage() {
     e.preventDefault();
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ emailAddress, password }),
-      });
+      const signInResponse = await signIn.create({ identifier: emailAddress, password });
+      await setActive({ session: signInResponse.createdSessionId });
 
-      if (response.ok) {
-        const session = await response.json();
-        const { token } = session;
-        const signInResponse = await signIn.create({
-          identifier: emailAddress,
-          password,
-          token,
-        });
-        await setActive({ session: signInResponse.createdSessionId });
-
-        // Login successful, redirect to home
-        navigate('/');
-      } else {
-        // Handle login error
-        const data = await response.json();
-        alert(data.message || 'Login failed');
-      }
+      // Login successful, redirect to home
+      navigate('/');
     } catch (error) {
       console.error('Login error:', error);
       alert('Login failed. Please try again.');

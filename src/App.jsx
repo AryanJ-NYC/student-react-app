@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
-import { StudentInfo } from './StudentInfo'; // named import
-// import StudentInfo from './StudentInfo'; // default import
+import { StudentInfo } from './StudentInfo';
 import { Link } from 'react-router-dom';
 import './App.css';
 import { useAuth } from '@clerk/clerk-react';
@@ -53,13 +52,7 @@ function StudentListPage() {
       {!isSignedIn && <Link to="/register">Register</Link>}
       {!isSignedIn && <Link to="/login">Login</Link>}
       {isSignedIn && (
-        <button
-          onClick={async () => {
-            await fetch(`${import.meta.env.VITE_API_URL}/logout`);
-            signOut();
-          }}
-          type="button"
-        >
+        <button onClick={signOut} type="button">
           Logout
         </button>
       )}
